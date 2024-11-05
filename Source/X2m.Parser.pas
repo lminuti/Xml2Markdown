@@ -1,4 +1,4 @@
-unit X2m.Parser;
+﻿unit X2m.Parser;
 
 interface
 
@@ -59,11 +59,18 @@ type
 
 implementation
 
+const
+  sStructIcon = '🟦'; // Blue square
+  sInterfaceIcon = '🟪'; // Blue square
+  sComplexTypeIcon = '🟧'; // Orange square
+  sSimpleTypeIcon = '🟩'; // Green square
+
 function QuoteMD(const AValue: string): string;
 begin
   Result := AValue;
   Result := StringReplace(Result, '<', '\<', [rfReplaceAll]);
   Result := StringReplace(Result, '>', '\>', [rfReplaceAll]);
+  Result := StringReplace(Result, '`', '''', [rfReplaceAll]);
 end;
 
 function Coalesce(const AValue, ADefault: string): string;
@@ -145,10 +152,11 @@ begin
   FTemplates.AddString('ancestor', '');
   FTemplates.AddString('namespace', '# Unit %name%' + sLineBreak + sLineBreak + '%children%');
   //FTemplates.AddString('class', sLineBreak + '## %name% (class)' + sLineBreak + sLineBreak + '%children%');
-  FTemplates.AddString('struct', sLineBreak + '## %name% (record)' + sLineBreak + sLineBreak + '%children%');
+  FTemplates.AddString('type', sLineBreak + '## ' + sComplexTypeIcon + ' %name% (type)' + sLineBreak + sLineBreak + '%children%');
+  FTemplates.AddString('struct', sLineBreak + '## ' + sStructIcon + ' %name% (record)' + sLineBreak + sLineBreak + '%children%');
   FTemplates.AddProc('class', ClassHandler);
   FTemplates.AddProc('interface', InterfaceHandler);
-  FTemplates.AddString('helper', sLineBreak + '## %name% helper for %for%' + sLineBreak + sLineBreak + '%children%');
+  FTemplates.AddString('helper', sLineBreak + '## ' + sStructIcon + ' %name% (helper)' + sLineBreak + sLineBreak + '`%name% helper for %for%`' + sLineBreak + sLineBreak + '%children%');
   FTemplates.AddString('members', 'Members:' + sLineBreak + sLineBreak + '%children%');
   FTemplates.AddProc('function', FunctionHandler);
   FTemplates.AddProc('procedure', ProcedureHandler);
@@ -158,9 +166,9 @@ begin
   FTemplates.AddProc('field', FieldHandler);
   FTemplates.AddProc('const', ConstHandler);
   FTemplates.AddProc('enum', EnumHandler);
-  FTemplates.AddString('set', sLineBreak + '## %name% (set)' + sLineBreak + sLineBreak + '`%name% = set of %type%`' + sLineBreak + sLineBreak);
-  FTemplates.AddString('pointer', sLineBreak + '## %name% (pointer)' + sLineBreak + sLineBreak + '`%name% = Pointer`' + sLineBreak + sLineBreak);
-  FTemplates.AddString('anonMethod', sLineBreak + '## %name% (reference)' + sLineBreak + sLineBreak + '`%name% = reference to procedure`' + sLineBreak + sLineBreak);
+  FTemplates.AddString('set', sLineBreak + '## ' + sComplexTypeIcon + ' %name% (set)' + sLineBreak + sLineBreak + '`%name% = set of %type%`' + sLineBreak + sLineBreak);
+  FTemplates.AddString('pointer', sLineBreak + '## ' + sSimpleTypeIcon + ' %name% (pointer)' + sLineBreak + sLineBreak + '`%name% = Pointer`' + sLineBreak + sLineBreak);
+  FTemplates.AddString('anonMethod', sLineBreak + '## ' + sComplexTypeIcon + ' %name% (reference)' + sLineBreak + sLineBreak + '`%name% = reference to procedure`' + sLineBreak + sLineBreak);
   FTemplates.AddProc('array', ArrayHandler);
   FTemplates.AddString('b', '**%children%** ');
   FTemplates.AddString('i', '*%children%* ');
@@ -189,7 +197,7 @@ begin
   if not ShowElement(Node) then
     Exit('');
 
-  Result := '## ' + Node.Attributes['name'] + ' (enum)' + sLineBreak + sLineBreak;
+  Result := '## ' + sSimpleTypeIcon + ' ' + Node.Attributes['name'] + ' (enum)' + sLineBreak + sLineBreak;
   var LValues: TArray<string> := [];
   for var I := 0 to Node.ChildNodes.Count - 1 do
   begin
@@ -212,7 +220,7 @@ begin
   if not ShowElement(Node) then
     Exit('');
 
-  Result := '**' + Node.Attributes['name'] + '** (field)' + sLineBreak + sLineBreak;
+  Result := '• **' + Node.Attributes['name'] + '** (field)' + sLineBreak + sLineBreak;
   Result := Result + '`Field ' + Node.Attributes['name'] + ': ' + Coalesce(VarToStr(Node.Attributes['type']), '?') + '`' + sLineBreak;
   var LNode := Node.ChildNodes.FindNode('devnotes');
   if Assigned(LNode) then
@@ -228,7 +236,7 @@ begin
   if Assigned(Node.ChildNodes.FindNode('element')) then
     LType := Coalesce(VarToStr(Node.ChildNodes.FindNode('element').Attributes['type']), '?');
 
-  Result := '## ' + VarToStr(Node.Attributes['name']) + ' (array)' + sLineBreak + sLineBreak;
+  Result := '## ' + sComplexTypeIcon + ' ' + VarToStr(Node.Attributes['name']) + ' (array)' + sLineBreak + sLineBreak;
   Result := Result + '`' + VarToStr(Node.Attributes['name']) + ' = array of ' + LType + '`' + sLineBreak + sLineBreak;
   Result := Result + ProcessNodes(Node.ChildNodes) + sLineBreak;
 end;
@@ -255,8 +263,8 @@ begin
       LImplementsStr := ', ' + string.Join(', ', LImplements);
   end;
 
-  Result := '## ' + VarToStr(Node.Attributes['name']) + ' (class)' + sLineBreak + sLineBreak;
-  Result := Result + '`' + VarToStr(Node.Attributes['name']) + ' = class(' + LAnchestor + LImplementsStr + ')`' + sLineBreak + sLineBreak;
+  Result := '## ' + sStructIcon + ' ' + QuoteMD(VarToStr(Node.Attributes['name'])) + ' (class)' + sLineBreak + sLineBreak;
+  Result := Result + '`' + QuoteMD(VarToStr(Node.Attributes['name'])) + ' = class(' + LAnchestor + LImplementsStr + ')`' + sLineBreak + sLineBreak;
   Result := Result + ProcessNodes(Node.ChildNodes) + sLineBreak;
 end;
 
@@ -265,7 +273,7 @@ begin
   if not ShowElement(Node) then
     Exit('');
 
-  Result := '**' + Node.Attributes['name'] + '** (const)' + sLineBreak + sLineBreak;
+  Result := '• **' + Node.Attributes['name'] + '** (const)' + sLineBreak + sLineBreak;
   Result := Result + '`const ' + Node.Attributes['name'] + ': ' + Coalesce(VarToStr(Node.Attributes['type']), '?') + '`' + sLineBreak;
   var LNode := Node.ChildNodes.FindNode('devnotes');
   if Assigned(LNode) then
@@ -277,7 +285,7 @@ end;
 
 function TParser.FunctionHandler(Node: IXMLNode): string;
 begin
-  Result := '**' + Node.Attributes['name'] + '**' + sLineBreak + sLineBreak;
+  Result := '• **' + Node.Attributes['name'] + '**' + sLineBreak + sLineBreak;
   var LParamsNode := Node.ChildNodes.FindNode('parameters');
   Result := Result + '`function ' + Node.Attributes['name'] + '(' + ProcessParameters(LParamsNode) + '): ' + ParseRetVar(LParamsNode) + ';`' + sLineBreak;
   var LNode := Node.ChildNodes.FindNode('devnotes');
@@ -292,7 +300,7 @@ function TParser.InterfaceHandler(Node: IXMLNode): string;
 begin
   var LAnchestor := VarToStr(Node.Attributes['ancestor']);
 
-  Result := '## ' + VarToStr(Node.Attributes['name']) + ' (interface)' + sLineBreak + sLineBreak;
+  Result := '## ' + sInterfaceIcon + ' ' + VarToStr(Node.Attributes['name']) + ' (interface)' + sLineBreak + sLineBreak;
   Result := Result + '`' + VarToStr(Node.Attributes['name']) + ' = interface(' + LAnchestor + ')`' + sLineBreak + sLineBreak;
   Result := Result + ProcessNodes(Node.ChildNodes) + sLineBreak;
 end;
@@ -307,7 +315,7 @@ begin
   if not ShowElement(Node) then
     Exit('');
 
-  Result := '**' + Node.Attributes['name'] + '**' + sLineBreak + sLineBreak;
+  Result := '• **' + Node.Attributes['name'] + '**' + sLineBreak + sLineBreak;
   var LParamsNode := Node.ChildNodes.FindNode('parameters');
   Result := Result + '`' + AMethodKind + ' ' + Node.Attributes['name'] + '(' + ProcessParameters(LParamsNode) + ');`' + sLineBreak + sLineBreak;
   var LNode := Node.ChildNodes.FindNode('devnotes');
@@ -438,7 +446,7 @@ begin
   if not ShowElement(Node) then
     Exit('');
 
-  Result := '**' + Node.Attributes['name'] + '**' + sLineBreak + sLineBreak;
+  Result := '• **' + Node.Attributes['name'] + '**' + sLineBreak + sLineBreak;
   Result := Result + '`property ' + Node.Attributes['name'] + ': ' + Node.Attributes['type'] + '`' + sLineBreak;
   var LNode := Node.ChildNodes.FindNode('devnotes');
   if Assigned(LNode) then
@@ -451,7 +459,7 @@ end;
 function TParser.ShowElement(Node: IXMLNode): Boolean;
 begin
   var LVisibility := VarToStr(Node.Attributes['visibility']);
-  Result := LVisibility <> 'private';
+  Result := (LVisibility <> 'private') and ((LVisibility <> 'class private'));
 end;
 
 function TParser.ConstructorHandler(Node: IXMLNode): string;
