@@ -6,8 +6,14 @@ uses
   System.Classes, System.SysUtils, System.IOUtils;
 
 type
+  /// <summary>
+  /// Exception class for command line errors (parse errors)
+  /// </summary>
   ECommandLineError = class(Exception);
 
+  /// <summary>
+  /// This class is responsible for parsing the command line and converting the XMLDOC files to markdown
+  /// </summary>
   TCommandLine = class(TObject)
   private
     FInputPath: TArray<string>;
@@ -15,16 +21,44 @@ type
     FRecursive: Boolean;
     FForce: Boolean;
     FHelp: Boolean;
+    FShowPrivate: Boolean;
     FSearchPattern: string;
+    /// <summary>
+    /// Shows the help information
+    /// </summary>
     procedure ShowHelp;
+    /// <summary>
+    /// </summary>
+    // Converts a XMLDOC string to markdown
     function ConvertToMarkdown(const XMLContent: string): string;
+    /// <summary>
+    /// Converts a list of files or directories to markdown
+    /// </summary>
     procedure ConvertFilesToMarkdown(FileNames: TArray<string>);
+    /// <summary>
+    /// Converts a file to markdown
+    /// </summary>
     procedure ConvertFileToMarkdown(const FileName: string);
+    /// <summary>
+    /// Converts a directory to markdown
+    /// </summary>
     procedure ConvertDirectoryToMarkdown(const DirName: string);
+    /// <summary>
+    /// Converts all files to markdown
+    /// </summary>
     procedure Convert;
+    /// <summary>
+    /// The constructor
+    /// </summary>
     constructor Create;
+    /// <summary>
+    /// Parses the command line
+    /// </summary>
     procedure ParseCommandLine;
   public
+    /// <summary>
+    /// Run the command line tool
+    /// </summary>
     class procedure Run; static;
   end;
 
@@ -99,6 +133,7 @@ function TCommandLine.ConvertToMarkdown(const XMLContent: string): string;
 begin
   var Parser := TParser.Create;
   try
+    Parser.ShowPrivate := FShowPrivate;
     Result := Parser.ConvertToMarkdown(XMLContent);
   finally
     Parser.Free;
@@ -117,6 +152,7 @@ begin
   FRecursive := False;
   FForce := False;
   FHelp := False;
+  FShowPrivate := False;
   FInputPath := [];
 
   var I := 1;
@@ -135,6 +171,10 @@ begin
     else if SameText(ParamStr(I), '/R') then
     begin
       FRecursive := True;
+    end
+    else if SameText(ParamStr(I), '/S') then
+    begin
+      FShowPrivate := True;
     end
     else if SameText(ParamStr(I), '/F') then
     begin
@@ -178,6 +218,7 @@ begin
   Writeln('  /H           Display help information');
   Writeln('  pathname     One or more files or directories to convert. If a directory is specified, ');
   Writeln('               the tool will process all XML files within it');
+  Writeln('  /S           Show private elements');
 end;
 
 end.

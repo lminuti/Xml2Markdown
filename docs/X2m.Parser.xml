@@ -1,0 +1,595 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name="X2m.Parser" platform="Win32">
+  <type name="TNodeHandlerProc" file="X2m.Parser.pas" line="16" procflags="closure">
+    <devnotes>
+       <summary>
+       This event is used to handle the processing of a node with a custom procedure
+       </summary>
+    </devnotes>
+  </type>
+  <struct name="TNodeHandler" size="16" file="X2m.Parser.pas" line="21">
+    <devnotes>
+       <summary>
+       This record is used to store the template OR the procedure to handle XML transformations
+       </summary>
+    </devnotes>
+    <field name="Template" type="string" visibility="public" size="4" offset="0" file="X2m.Parser.pas" line="23" />
+    <field name="Proc" type="TNodeHandlerProc" visibility="public" size="8" offset="8" file="X2m.Parser.pas" line="24" />
+    <function name="IsDefault" visibility="public" file="X2m.Parser.pas" line="25">
+      <parameters>
+        <retval type="Boolean" />
+      </parameters>
+    </function>
+    <function name="Default" visibility="public" procflags="static" file="X2m.Parser.pas" line="26">
+      <parameters>
+        <retval type="TNodeHandler">
+          <devnotes>
+             <summary>
+             This record is used to store the template OR the procedure to handle XML transformations
+             </summary>
+          </devnotes>
+        </retval>
+      </parameters>
+    </function>
+  </struct>
+  <class name="TTemplates" file="X2m.Parser.pas" line="33">
+    <devnotes>
+       <summary>
+       This class is used to store all the templates and procedures to handle XML transformations.
+       The key is the name of the XML node.
+       </summary>
+    </devnotes>
+    <ancestor name="{System.Generics.Collections}TDictionary&lt;System.string,X2m.Parser.TNodeHandler&gt;" namespace="X2m.Parser">
+      <methodref name="InternalSetCapacity" visibility="private">
+      </methodref>
+      <methodref name="Rehash" visibility="private">
+      </methodref>
+      <methodref name="Grow" visibility="private">
+      </methodref>
+      <methodref name="GetBucketIndex" visibility="private">
+      </methodref>
+      <methodref name="Hash" visibility="private">
+      </methodref>
+      <methodref name="GetIsEmpty" visibility="private" procflags="inline">
+      </methodref>
+      <methodref name="GetItem" visibility="private">
+      </methodref>
+      <methodref name="SetItem" visibility="private">
+      </methodref>
+      <methodref name="DoAdd" visibility="private">
+      </methodref>
+      <methodref name="DoSetValue" visibility="private">
+      </methodref>
+      <methodref name="DoRemove" visibility="private">
+      </methodref>
+      <methodref name="GetCapacity" visibility="private">
+      </methodref>
+      <methodref name="SetCapacity" visibility="private">
+      </methodref>
+      <methodref name="GetCollisions" visibility="private">
+      </methodref>
+      <methodref name="DoGetEnumerator" visibility="protected" procflags="override">
+      </methodref>
+      <methodref name="KeyNotify" visibility="protected" procflags="virtual">
+      </methodref>
+      <methodref name="ValueNotify" visibility="protected" procflags="virtual">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Destroy" visibility="public" procflags="destructor override">
+      </methodref>
+      <methodref name="Add" visibility="public">
+      </methodref>
+      <methodref name="Remove" visibility="public">
+      </methodref>
+      <methodref name="ExtractPair" visibility="public">
+      </methodref>
+      <methodref name="Clear" visibility="public">
+      </methodref>
+      <methodref name="TrimExcess" visibility="public">
+      </methodref>
+      <methodref name="TryGetValue" visibility="public">
+      </methodref>
+      <methodref name="AddOrSetValue" visibility="public">
+      </methodref>
+      <methodref name="TryAdd" visibility="public">
+      </methodref>
+      <methodref name="ContainsKey" visibility="public">
+      </methodref>
+      <methodref name="ContainsValue" visibility="public">
+      </methodref>
+      <methodref name="ToArray" visibility="public" procflags="final override">
+      </methodref>
+      <propertyref name="Capacity" visibility="public">
+      </propertyref>
+      <propertyref name="Items" visibility="public">
+      </propertyref>
+      <propertyref name="Count" visibility="public">
+      </propertyref>
+      <propertyref name="IsEmpty" visibility="public">
+      </propertyref>
+      <propertyref name="GrowThreshold" visibility="public">
+      </propertyref>
+      <propertyref name="Collisions" visibility="public">
+      </propertyref>
+      <methodref name="GetKeys" visibility="private">
+      </methodref>
+      <methodref name="GetValues" visibility="private">
+      </methodref>
+      <methodref name="GetEnumerator" visibility="public">
+      </methodref>
+      <propertyref name="Keys" visibility="public">
+      </propertyref>
+      <propertyref name="Values" visibility="public">
+      </propertyref>
+      <propertyref name="Comparer" visibility="public">
+      </propertyref>
+      <eventref name="OnKeyNotify" visibility="public">
+      </eventref>
+      <eventref name="OnValueNotify" visibility="public">
+      </eventref>
+      <ancestor name="{System.Generics.Collections}TEnumerable&lt;System.Generics.Collections.TPair&lt;System.string,X2m.Parser.TNodeHandler&gt;&gt;" namespace="X2m.Parser">
+        <methodref name="ToArrayImpl" visibility="protected">
+        </methodref>
+        <methodref name="DoGetEnumerator" visibility="protected" procflags="abstract virtual">
+        </methodref>
+        <methodref name="Destroy" visibility="public" procflags="destructor override">
+        </methodref>
+        <methodref name="GetEnumerator" visibility="public" procflags="inline">
+        </methodref>
+        <methodref name="ToArray" visibility="public" procflags="virtual">
+        </methodref>
+        <ancestor name="TObject" namespace="System">
+          <methodref name="Create" visibility="public" procflags="constructor">
+          </methodref>
+          <methodref name="Free" visibility="public">
+          </methodref>
+          <methodref name="DisposeOf" visibility="public" procflags="inline" symflags="deprecated">
+          </methodref>
+          <methodref name="InitInstance" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="CleanupInstance" visibility="public">
+          </methodref>
+          <methodref name="ClassType" visibility="public" procflags="inline">
+          </methodref>
+          <methodref name="ClassName" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="ClassNameIs" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="ClassParent" visibility="public" procflags="class inline">
+          </methodref>
+          <methodref name="ClassInfo" visibility="public" procflags="class inline">
+          </methodref>
+          <methodref name="InstanceSize" visibility="public" procflags="class inline">
+          </methodref>
+          <methodref name="InheritsFrom" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="MethodAddress" visibility="public" procflags="class overload">
+          </methodref>
+          <methodref name="MethodAddress" visibility="public" procflags="class overload">
+          </methodref>
+          <methodref name="MethodName" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="QualifiedClassName" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="FieldAddress" visibility="public" procflags="overload">
+          </methodref>
+          <methodref name="FieldAddress" visibility="public" procflags="overload">
+          </methodref>
+          <methodref name="GetInterface" visibility="public">
+          </methodref>
+          <methodref name="GetInterfaceEntry" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="GetInterfaceTable" visibility="public" procflags="class inline">
+          </methodref>
+          <methodref name="UnitName" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="UnitScope" visibility="public" procflags="class">
+          </methodref>
+          <methodref name="Equals" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="GetHashCode" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="ToString" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="SafeCallException" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="AfterConstruction" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="BeforeDestruction" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="Dispatch" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="DefaultHandler" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="NewInstance" visibility="public" procflags="class virtual">
+          </methodref>
+          <methodref name="FreeInstance" visibility="public" procflags="virtual">
+          </methodref>
+          <methodref name="Destroy" visibility="public" procflags="destructor virtual">
+          </methodref>
+          <methodref name="GetDisposed" visibility="protected" procflags="inline">
+          </methodref>
+          <methodref name="CheckDisposed" visibility="protected" procflags="inline">
+          </methodref>
+          <propertyref name="Disposed" visibility="protected">
+          </propertyref>
+        </ancestor>
+      </ancestor>
+    </ancestor>
+    <members>
+      <procedure name="AddString" visibility="public" file="X2m.Parser.pas" line="38">
+        <devnotes>
+           <summary>
+           Add a string template to the dictionary
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="AName" type="string" paramflags="const" />
+          <parameter name="ATemplate" type="string" paramflags="const" />
+        </parameters>
+      </procedure>
+      <procedure name="AddProc" visibility="public" file="X2m.Parser.pas" line="42">
+        <devnotes>
+           <summary>
+           Add a procedure to the dictionary
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="AName" type="string" paramflags="const" />
+          <parameter name="AProc" type="TNodeHandlerProc" />
+        </parameters>
+      </procedure>
+    </members>
+  </class>
+  <class name="TParser" file="X2m.Parser.pas" line="48">
+    <devnotes>
+       <summary>
+       This class is responsible for parsing the XMLDOC and converting it to markdown
+       </summary>
+    </devnotes>
+    <ancestor name="TObject" namespace="System">
+      <methodref name="Create" visibility="public" procflags="constructor">
+      </methodref>
+      <methodref name="Free" visibility="public">
+      </methodref>
+      <methodref name="DisposeOf" visibility="public" procflags="inline" symflags="deprecated">
+      </methodref>
+      <methodref name="InitInstance" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="CleanupInstance" visibility="public">
+      </methodref>
+      <methodref name="ClassType" visibility="public" procflags="inline">
+      </methodref>
+      <methodref name="ClassName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="ClassNameIs" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="ClassParent" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="ClassInfo" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="InstanceSize" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="InheritsFrom" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="MethodAddress" visibility="public" procflags="class overload">
+      </methodref>
+      <methodref name="MethodAddress" visibility="public" procflags="class overload">
+      </methodref>
+      <methodref name="MethodName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="QualifiedClassName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="FieldAddress" visibility="public" procflags="overload">
+      </methodref>
+      <methodref name="FieldAddress" visibility="public" procflags="overload">
+      </methodref>
+      <methodref name="GetInterface" visibility="public">
+      </methodref>
+      <methodref name="GetInterfaceEntry" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="GetInterfaceTable" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="UnitName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="UnitScope" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="Equals" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="GetHashCode" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="ToString" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="SafeCallException" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="AfterConstruction" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="BeforeDestruction" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="Dispatch" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="DefaultHandler" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="NewInstance" visibility="public" procflags="class virtual">
+      </methodref>
+      <methodref name="FreeInstance" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="Destroy" visibility="public" procflags="destructor virtual">
+      </methodref>
+      <methodref name="GetDisposed" visibility="protected" procflags="inline">
+      </methodref>
+      <methodref name="CheckDisposed" visibility="protected" procflags="inline">
+      </methodref>
+      <propertyref name="Disposed" visibility="protected">
+      </propertyref>
+    </ancestor>
+    <members>
+      <field name="FLevel" type="Integer" visibility="private" size="4" offset="4" file="X2m.Parser.pas" line="50" />
+      <field name="FTemplates" type="TTemplates" visibility="private" size="4" offset="8" file="X2m.Parser.pas" line="51" />
+      <field name="FShowPrivate" type="Boolean" visibility="private" size="1" offset="12" file="X2m.Parser.pas" line="52" />
+      <function name="ProcessTemplate" visibility="private" file="X2m.Parser.pas" line="56">
+        <devnotes>
+           <summary>
+           This method processes a template and replaces the placeholders with the values from the XML node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="ATemplate" type="string" paramflags="const" />
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ProcessTextNode" visibility="private" file="X2m.Parser.pas" line="60">
+        <devnotes>
+           <summary>
+           This method processes a text node and returns the text value
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ProcessNode" visibility="private" file="X2m.Parser.pas" line="64">
+        <devnotes>
+           <summary>
+           This method processes a node with the templates or procedures found in the TTemplates class
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ProcessNodes" visibility="private" file="X2m.Parser.pas" line="68">
+        <devnotes>
+           <summary>
+           This method processes a list of nodes
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNodeList" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ProcessParameters" visibility="private" file="X2m.Parser.pas" line="72">
+        <devnotes>
+           <summary>
+           This method processes the parameters of a function or procedure
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="FunctionHandler" visibility="private" file="X2m.Parser.pas" line="77">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>function</b> node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ProcedureHandler" visibility="private" file="X2m.Parser.pas" line="81">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>procedure</b> node    
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="PropertyHandler" visibility="private" file="X2m.Parser.pas" line="85">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>property</b> node    
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ConstructorHandler" visibility="private" file="X2m.Parser.pas" line="89">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>constructor</b> node    
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="DestructorHandler" visibility="private" file="X2m.Parser.pas" line="93">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>destructor</b> node    
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="FieldHandler" visibility="private" file="X2m.Parser.pas" line="97">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>field</b> node    
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="MethodHandler" visibility="private" file="X2m.Parser.pas" line="101">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>method</b> node (procedure, function, constructor, destructor)
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="AMethodKind" type="string" paramflags="const" />
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="EnumHandler" visibility="private" file="X2m.Parser.pas" line="105">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>enum</b> node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ConstHandler" visibility="private" file="X2m.Parser.pas" line="109">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>const</b> node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ClassHandler" visibility="private" file="X2m.Parser.pas" line="113">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>class</b> node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="InterfaceHandler" visibility="private" file="X2m.Parser.pas" line="117">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>interface</b> node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ArrayHandler" visibility="private" file="X2m.Parser.pas" line="121">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>array</b> node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="VarHandler" visibility="private" file="X2m.Parser.pas" line="125">
+        <devnotes>
+           <summary>
+           Custom procedure to handle a <b>var</b> node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ParseRetVar" visibility="private" file="X2m.Parser.pas" line="130">
+        <devnotes>
+           <summary>
+           Extracts the return variable from the parameters node
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <function name="ShowElement" visibility="private" file="X2m.Parser.pas" line="134">
+        <devnotes>
+           <summary>
+           Determines if the element should be shown (default is true for non-private elements)
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="Node" type="IXMLNode" />
+          <retval type="Boolean" />
+        </parameters>
+      </function>
+      <function name="ConvertToMarkdown" visibility="public" file="X2m.Parser.pas" line="139">
+        <devnotes>
+           <summary>
+           Converts a XMLDOC string to markdown
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="XMLContent" type="string" paramflags="const" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <property name="ShowPrivate" visibility="public" read="FShowPrivate" write="FShowPrivate" type="Boolean" file="X2m.Parser.pas" line="143">
+        <devnotes>
+           <summary>
+           This property determines if private elements should be shown in the markdown (default is false)
+           </summary>
+        </devnotes>
+      </property>
+      <constructor name="Create" visibility="public" file="X2m.Parser.pas" line="144">
+        <parameters>
+        </parameters>
+      </constructor>
+      <destructor name="Destroy" visibility="public" file="X2m.Parser.pas" line="145">
+        <parameters>
+        </parameters>
+      </destructor>
+    </members>
+  </class>
+</namespace>

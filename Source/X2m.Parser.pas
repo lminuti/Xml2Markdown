@@ -10,8 +10,14 @@ uses
   Xml.XMLIntf;
 
 type
+  /// <summary>
+  /// This event is used to handle the processing of a node with a custom procedure
+  /// </summary>
   TNodeHandlerProc = function (Node: IXMLNode): string of object;
 
+  /// <summary>
+  /// This record is used to store the template OR the procedure to handle XML transformations
+  /// </summary>
   TNodeHandler = record
   public
     Template: string;
@@ -20,39 +26,121 @@ type
     class function Default: TNodeHandler; static;
   end;
 
+  /// <summary>
+  /// This class is used to store all the templates and procedures to handle XML transformations.
+  /// The key is the name of the XML node.
+  /// </summary>
   TTemplates = class(TDictionary<string, TNodeHandler>)
   public
+    /// <summary>
+    /// Add a string template to the dictionary
+    /// </summary>
     procedure AddString(const AName, ATemplate: string);
+    /// <summary>
+    /// Add a procedure to the dictionary
+    /// </summary>
     procedure AddProc(const AName: string; AProc: TNodeHandlerProc);
   end;
 
+  /// <summary>
+  /// This class is responsible for parsing the XMLDOC and converting it to markdown
+  /// </summary>
   TParser = class(TObject)
   private
     FLevel: Integer;
     FTemplates: TTemplates;
+    FShowPrivate: Boolean;
+    /// <summary>
+    /// This method processes a template and replaces the placeholders with the values from the XML node
+    /// </summary>
     function ProcessTemplate(const ATemplate: string; Node: IXMLNode): string;
+    /// <summary>
+    /// This method processes a text node and returns the text value
+    /// </summary>
     function ProcessTextNode(Node: IXMLNode): string;
+    /// <summary>
+    /// This method processes a node with the templates or procedures found in the TTemplates class
+    /// </summary>
     function ProcessNode(Node: IXMLNode): string;
+    /// <summary>
+    /// This method processes a list of nodes
+    /// </summary>
     function ProcessNodes(Node: IXMLNodeList): string;
+    /// <summary>
+    /// This method processes the parameters of a function or procedure
+    /// </summary>
     function ProcessParameters(Node: IXMLNode): string;
 
+    /// <summary>
+    /// Custom procedure to handle a <b>function</b> node
+    /// </summary>
     function FunctionHandler(Node: IXMLNode): string;
-    function ParseRetVar(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>procedure</b> node    
+    /// </summary>
     function ProcedureHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>property</b> node    
+    /// </summary>
     function PropertyHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>constructor</b> node    
+    /// </summary>
     function ConstructorHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>destructor</b> node    
+    /// </summary>
     function DestructorHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>field</b> node    
+    /// </summary>
     function FieldHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>method</b> node (procedure, function, constructor, destructor)
+    /// </summary>
     function MethodHandler(const AMethodKind: string; Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>enum</b> node
+    /// </summary>
     function EnumHandler(Node: IXMLNode): string;
-
-    function ShowElement(Node: IXMLNode): Boolean;
+    /// <summary>
+    /// Custom procedure to handle a <b>const</b> node
+    /// </summary>
     function ConstHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>class</b> node
+    /// </summary>
     function ClassHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>interface</b> node
+    /// </summary>
     function InterfaceHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>array</b> node
+    /// </summary>
     function ArrayHandler(Node: IXMLNode): string;
+    /// <summary>
+    /// Custom procedure to handle a <b>var</b> node
+    /// </summary>
+    function VarHandler(Node: IXMLNode): string;
+
+    /// <summary>
+    /// Extracts the return variable from the parameters node
+    /// </summary>
+    function ParseRetVar(Node: IXMLNode): string;
+    /// <summary>
+    /// Determines if the element should be shown (default is true for non-private elements)
+    /// </summary>
+    function ShowElement(Node: IXMLNode): Boolean;
   public
+    /// <summary>
+    /// Converts a XMLDOC string to markdown
+    /// </summary>
     function ConvertToMarkdown(const XMLContent: string): string;
+    /// <summary>
+    /// This property determines if private elements should be shown in the markdown (default is false)
+    /// </summary>
+    property ShowPrivate: Boolean read FShowPrivate write FShowPrivate;
     constructor Create;
     destructor Destroy; override;
   end;
@@ -150,6 +238,7 @@ begin
   FTemplates.AddString('interfaces', '');
   FTemplates.AddString('attributes', '');
   FTemplates.AddString('ancestor', '');
+  FTemplates.AddString('contains', '');
   FTemplates.AddString('namespace', '# Unit %name%' + sLineBreak + sLineBreak + '%children%');
   //FTemplates.AddString('class', sLineBreak + '## %name% (class)' + sLineBreak + sLineBreak + '%children%');
   FTemplates.AddString('type', sLineBreak + '## ' + sComplexTypeIcon + ' %name% (type)' + sLineBreak + sLineBreak + '%children%');
@@ -157,7 +246,7 @@ begin
   FTemplates.AddProc('class', ClassHandler);
   FTemplates.AddProc('interface', InterfaceHandler);
   FTemplates.AddString('helper', sLineBreak + '## ' + sStructIcon + ' %name% (helper)' + sLineBreak + sLineBreak + '`%name% helper for %for%`' + sLineBreak + sLineBreak + '%children%');
-  FTemplates.AddString('members', 'Members:' + sLineBreak + sLineBreak + '%children%');
+  FTemplates.AddString('members', sLineBreak + 'Members:' + sLineBreak + sLineBreak + '%children%');
   FTemplates.AddProc('function', FunctionHandler);
   FTemplates.AddProc('procedure', ProcedureHandler);
   FTemplates.AddProc('constructor', ConstructorHandler);
@@ -165,6 +254,7 @@ begin
   FTemplates.AddProc('property', PropertyHandler);
   FTemplates.AddProc('field', FieldHandler);
   FTemplates.AddProc('const', ConstHandler);
+  FTemplates.AddProc('variable', VarHandler);
   FTemplates.AddProc('enum', EnumHandler);
   FTemplates.AddString('set', sLineBreak + '## ' + sComplexTypeIcon + ' %name% (set)' + sLineBreak + sLineBreak + '`%name% = set of %type%`' + sLineBreak + sLineBreak);
   FTemplates.AddString('pointer', sLineBreak + '## ' + sSimpleTypeIcon + ' %name% (pointer)' + sLineBreak + sLineBreak + '`%name% = Pointer`' + sLineBreak + sLineBreak);
@@ -283,6 +373,21 @@ begin
   Result := Result + sLineBreak;
 end;
 
+function TParser.VarHandler(Node: IXMLNode): string;
+begin
+  if not ShowElement(Node) then
+    Exit('');
+
+  Result := '• **' + Node.Attributes['name'] + '** (var)' + sLineBreak + sLineBreak;
+  Result := Result + '`var ' + Node.Attributes['name'] + ': ' + Coalesce(VarToStr(Node.Attributes['type']), '?') + '`' + sLineBreak;
+  var LNode := Node.ChildNodes.FindNode('devnotes');
+  if Assigned(LNode) then
+  begin
+    Result := Result + ProcessNode(LNode);
+  end;
+  Result := Result + sLineBreak;
+end;
+
 function TParser.FunctionHandler(Node: IXMLNode): string;
 begin
   Result := '• **' + Node.Attributes['name'] + '**' + sLineBreak + sLineBreak;
@@ -371,6 +476,8 @@ var
   LHandler: TNodeHandler;
 begin
   Result := '';
+  if not ShowElement(Node) then
+    Exit;
 //  Writeln(StringOfChar(' ', FLevel) + '[S] ' + Node.NodeName);
   Inc(FLevel);
   if not FTemplates.TryGetValue(Node.NodeName, LHandler) then
@@ -399,6 +506,10 @@ function TParser.ProcessTemplate(const ATemplate: string;
   Node: IXMLNode): string;
 begin
   Result := '';
+
+  if not ShowElement(Node) then
+    Exit;
+
   if ATemplate = '' then
     Exit;
 
@@ -458,6 +569,9 @@ end;
 
 function TParser.ShowElement(Node: IXMLNode): Boolean;
 begin
+  if FShowPrivate then
+    Exit(True);
+
   var LVisibility := VarToStr(Node.Attributes['visibility']);
   Result := (LVisibility <> 'private') and ((LVisibility <> 'class private'));
 end;

@@ -1,0 +1,315 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name="X2m.CommandLine" platform="Win32">
+  <class name="ECommandLineError" file="X2m.CommandLine.pas" line="12">
+    <devnotes>
+       <summary>
+       Exception class for command line errors (parse errors)
+       </summary>
+    </devnotes>
+    <ancestor name="Exception" namespace="System.SysUtils">
+      <methodref name="Create@" visibility="class private" procflags="class constructor noself">
+      </methodref>
+      <methodref name="Destroy@" visibility="class private" procflags="class destructor noself">
+      </methodref>
+      <methodref name="SetInnerException" visibility="protected">
+      </methodref>
+      <methodref name="SetStackInfo" visibility="protected">
+      </methodref>
+      <methodref name="GetStackTrace" visibility="protected">
+      </methodref>
+      <methodref name="RaisingException" visibility="protected" procflags="virtual">
+      </methodref>
+      <methodref name="Create" visibility="public" procflags="constructor">
+      </methodref>
+      <methodref name="CreateFmt" visibility="public" procflags="constructor">
+      </methodref>
+      <methodref name="CreateRes" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="CreateRes" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="CreateResFmt" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="CreateResFmt" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="CreateHelp" visibility="public" procflags="constructor">
+      </methodref>
+      <methodref name="CreateFmtHelp" visibility="public" procflags="constructor">
+      </methodref>
+      <methodref name="CreateResHelp" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="CreateResHelp" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="CreateResFmtHelp" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="CreateResFmtHelp" visibility="public" procflags="constructor overload">
+      </methodref>
+      <methodref name="Destroy" visibility="public" procflags="destructor override">
+      </methodref>
+      <methodref name="GetBaseException" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="ToString" visibility="public" procflags="override">
+      </methodref>
+      <propertyref name="BaseException" visibility="public">
+      </propertyref>
+      <propertyref name="HelpContext" visibility="public">
+      </propertyref>
+      <propertyref name="InnerException" visibility="public">
+      </propertyref>
+      <propertyref name="Message" visibility="public">
+      </propertyref>
+      <propertyref name="StackTrace" visibility="public">
+      </propertyref>
+      <propertyref name="StackInfo" visibility="public">
+      </propertyref>
+      <methodref name="RaiseOuterException" visibility="public" procflags="static">
+      </methodref>
+      <methodref name="ThrowOuterException" visibility="public" procflags="static">
+      </methodref>
+      <ancestor name="TObject" namespace="System">
+        <methodref name="Create" visibility="public" procflags="constructor">
+        </methodref>
+        <methodref name="Free" visibility="public">
+        </methodref>
+        <methodref name="DisposeOf" visibility="public" procflags="inline" symflags="deprecated">
+        </methodref>
+        <methodref name="InitInstance" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="CleanupInstance" visibility="public">
+        </methodref>
+        <methodref name="ClassType" visibility="public" procflags="inline">
+        </methodref>
+        <methodref name="ClassName" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="ClassNameIs" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="ClassParent" visibility="public" procflags="class inline">
+        </methodref>
+        <methodref name="ClassInfo" visibility="public" procflags="class inline">
+        </methodref>
+        <methodref name="InstanceSize" visibility="public" procflags="class inline">
+        </methodref>
+        <methodref name="InheritsFrom" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="MethodAddress" visibility="public" procflags="class overload">
+        </methodref>
+        <methodref name="MethodAddress" visibility="public" procflags="class overload">
+        </methodref>
+        <methodref name="MethodName" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="QualifiedClassName" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="FieldAddress" visibility="public" procflags="overload">
+        </methodref>
+        <methodref name="FieldAddress" visibility="public" procflags="overload">
+        </methodref>
+        <methodref name="GetInterface" visibility="public">
+        </methodref>
+        <methodref name="GetInterfaceEntry" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="GetInterfaceTable" visibility="public" procflags="class inline">
+        </methodref>
+        <methodref name="UnitName" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="UnitScope" visibility="public" procflags="class">
+        </methodref>
+        <methodref name="Equals" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="GetHashCode" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="ToString" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="SafeCallException" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="AfterConstruction" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="BeforeDestruction" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="Dispatch" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="DefaultHandler" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="NewInstance" visibility="public" procflags="class virtual">
+        </methodref>
+        <methodref name="FreeInstance" visibility="public" procflags="virtual">
+        </methodref>
+        <methodref name="Destroy" visibility="public" procflags="destructor virtual">
+        </methodref>
+        <methodref name="GetDisposed" visibility="protected" procflags="inline">
+        </methodref>
+        <methodref name="CheckDisposed" visibility="protected" procflags="inline">
+        </methodref>
+        <propertyref name="Disposed" visibility="protected">
+        </propertyref>
+      </ancestor>
+    </ancestor>
+  </class>
+  <class name="TCommandLine" file="X2m.CommandLine.pas" line="17">
+    <devnotes>
+       <summary>
+       This class is responsible for parsing the command line and converting the XMLDOC files to markdown
+       </summary>
+    </devnotes>
+    <ancestor name="TObject" namespace="System">
+      <methodref name="Create" visibility="public" procflags="constructor">
+      </methodref>
+      <methodref name="Free" visibility="public">
+      </methodref>
+      <methodref name="DisposeOf" visibility="public" procflags="inline" symflags="deprecated">
+      </methodref>
+      <methodref name="InitInstance" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="CleanupInstance" visibility="public">
+      </methodref>
+      <methodref name="ClassType" visibility="public" procflags="inline">
+      </methodref>
+      <methodref name="ClassName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="ClassNameIs" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="ClassParent" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="ClassInfo" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="InstanceSize" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="InheritsFrom" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="MethodAddress" visibility="public" procflags="class overload">
+      </methodref>
+      <methodref name="MethodAddress" visibility="public" procflags="class overload">
+      </methodref>
+      <methodref name="MethodName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="QualifiedClassName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="FieldAddress" visibility="public" procflags="overload">
+      </methodref>
+      <methodref name="FieldAddress" visibility="public" procflags="overload">
+      </methodref>
+      <methodref name="GetInterface" visibility="public">
+      </methodref>
+      <methodref name="GetInterfaceEntry" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="GetInterfaceTable" visibility="public" procflags="class inline">
+      </methodref>
+      <methodref name="UnitName" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="UnitScope" visibility="public" procflags="class">
+      </methodref>
+      <methodref name="Equals" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="GetHashCode" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="ToString" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="SafeCallException" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="AfterConstruction" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="BeforeDestruction" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="Dispatch" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="DefaultHandler" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="NewInstance" visibility="public" procflags="class virtual">
+      </methodref>
+      <methodref name="FreeInstance" visibility="public" procflags="virtual">
+      </methodref>
+      <methodref name="Destroy" visibility="public" procflags="destructor virtual">
+      </methodref>
+      <methodref name="GetDisposed" visibility="protected" procflags="inline">
+      </methodref>
+      <methodref name="CheckDisposed" visibility="protected" procflags="inline">
+      </methodref>
+      <propertyref name="Disposed" visibility="protected">
+      </propertyref>
+    </ancestor>
+    <members>
+      <field name="FInputPath" type="TArray&lt;System.string&gt;" visibility="private" size="4" offset="4" file="X2m.CommandLine.pas" line="19" />
+      <field name="FOutputDir" type="string" visibility="private" size="4" offset="8" file="X2m.CommandLine.pas" line="20" />
+      <field name="FRecursive" type="Boolean" visibility="private" size="1" offset="12" file="X2m.CommandLine.pas" line="21" />
+      <field name="FForce" type="Boolean" visibility="private" size="1" offset="13" file="X2m.CommandLine.pas" line="22" />
+      <field name="FHelp" type="Boolean" visibility="private" size="1" offset="14" file="X2m.CommandLine.pas" line="23" />
+      <field name="FShowPrivate" type="Boolean" visibility="private" size="1" offset="15" file="X2m.CommandLine.pas" line="24" />
+      <field name="FSearchPattern" type="string" visibility="private" size="4" offset="16" file="X2m.CommandLine.pas" line="25" />
+      <procedure name="ShowHelp" visibility="private" file="X2m.CommandLine.pas" line="29">
+        <devnotes>
+           <summary>
+           Shows the help information
+           </summary>
+        </devnotes>
+      </procedure>
+      <function name="ConvertToMarkdown" visibility="private" file="X2m.CommandLine.pas" line="33">
+        <devnotes>
+           <summary>
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="XMLContent" type="string" paramflags="const" />
+          <retval type="string" />
+        </parameters>
+      </function>
+      <procedure name="ConvertFilesToMarkdown" visibility="private" file="X2m.CommandLine.pas" line="37">
+        <devnotes>
+           <summary>
+           Converts a list of files or directories to markdown
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="FileNames" type="TArray&lt;System.string&gt;" />
+        </parameters>
+      </procedure>
+      <procedure name="ConvertFileToMarkdown" visibility="private" file="X2m.CommandLine.pas" line="41">
+        <devnotes>
+           <summary>
+           Converts a file to markdown
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="FileName" type="string" paramflags="const" />
+        </parameters>
+      </procedure>
+      <procedure name="ConvertDirectoryToMarkdown" visibility="private" file="X2m.CommandLine.pas" line="45">
+        <devnotes>
+           <summary>
+           Converts a directory to markdown
+           </summary>
+        </devnotes>
+        <parameters>
+          <parameter name="DirName" type="string" paramflags="const" />
+        </parameters>
+      </procedure>
+      <procedure name="Convert" visibility="private" file="X2m.CommandLine.pas" line="49">
+        <devnotes>
+           <summary>
+           Converts all files to markdown
+           </summary>
+        </devnotes>
+      </procedure>
+      <constructor name="Create" visibility="private" file="X2m.CommandLine.pas" line="53">
+        <devnotes>
+           <summary>
+           The constructor
+           </summary>
+        </devnotes>
+        <parameters>
+        </parameters>
+      </constructor>
+      <procedure name="ParseCommandLine" visibility="private" file="X2m.CommandLine.pas" line="57">
+        <devnotes>
+           <summary>
+           Parses the command line
+           </summary>
+        </devnotes>
+      </procedure>
+      <procedure name="Run" visibility="public" procflags="static" file="X2m.CommandLine.pas" line="62">
+        <devnotes>
+           <summary>
+           Run the command line tool
+           </summary>
+        </devnotes>
+      </procedure>
+    </members>
+  </class>
+</namespace>
