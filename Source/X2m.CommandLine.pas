@@ -15,6 +15,7 @@ type
     FRecursive: Boolean;
     FForce: Boolean;
     FHelp: Boolean;
+    FSearchPattern: string;
     procedure ShowHelp;
     function ConvertToMarkdown(const XMLContent: string): string;
     procedure ConvertFilesToMarkdown(FileNames: TArray<string>);
@@ -50,7 +51,7 @@ end;
 
 procedure TCommandLine.ConvertDirectoryToMarkdown(const DirName: string);
 begin
-  var FileNames := TDirectory.GetFiles(DirName, '*.xml');
+  var FileNames := TDirectory.GetFiles(DirName, FSearchPattern);
   ConvertFilesToMarkdown(FileNames);
   if FRecursive then
   begin
@@ -111,6 +112,7 @@ end;
 
 procedure TCommandLine.ParseCommandLine;
 begin
+  FSearchPattern := '*.xml';
   FOutputDir := '';
   FRecursive := False;
   FForce := False;
@@ -123,6 +125,11 @@ begin
     if SameText(ParamStr(I), '/O') then
     begin
       FOutputDir := ParamStr(I + 1);
+      Inc(I);
+    end
+    else if SameText(ParamStr(I), '/P') then
+    begin
+      FSearchPattern := ParamStr(I + 1);
       Inc(I);
     end
     else if SameText(ParamStr(I), '/R') then
@@ -162,11 +169,12 @@ begin
   AppName := ChangeFileExt(ExtractFileName(ParamStr(0)), '');
   Writeln('Converts XMLDOC files in markdown');
   Writeln;
-  Writeln(AppName + ' [/R] [/F] [/O output] [/H] pathname...');
+  Writeln(AppName + ' [/R] [/F] [/O output] [/P pattern] [/H] pathname...');
   Writeln;
   Writeln('  /R           Recursively convert files in the current directory and all subdirectories');
   Writeln('  /F           Force overwrite if output files already exist');
   Writeln('  /O output    Specify the output directory for the generated Markdown files');
+  Writeln('  /P parrern   Specify a search pattern (default *.xml)');
   Writeln('  /H           Display help information');
   Writeln('  pathname     One or more files or directories to convert. If a directory is specified, ');
   Writeln('               the tool will process all XML files within it');
