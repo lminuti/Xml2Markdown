@@ -43,3 +43,7 @@ Force overwrite existing files:
 ```
 Xml2Markdown /F /O docs MyUnit.xml
 ```
+
+## Known Issues
+
+The type generation in the markdown output may occasionally be incorrect. This is often due to malformed XML produced by Delphi, especially when dealing with generic types.
